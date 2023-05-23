@@ -80,7 +80,7 @@ import java.awt.event.KeyEvent;
         /**
          * Create the frame.
          */
-        public Gui() {
+        public MitarbeiterverwaltungsGui() {
             setTitle("Unternehmensverwaltung");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setBounds(100, 100, 817, 597);
