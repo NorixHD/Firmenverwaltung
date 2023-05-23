@@ -161,6 +161,57 @@ public static void Abgleich(String wert1,String wert2) {
                 e.printStackTrace();
             }
         }
+    
+    
+    
+    // Speichern der Gesamten mitarbeiter in einer JList
+
+/*
+
+
+
+
+
+    // public static void main(String[] args) {SwingUtilities.invokeLater(DatabaseToListExample::createAndShowGUI);}
+
+    private static void createAndShowGUI() {
+        JFrame frame = new JFrame("Database to JList Example");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JList<String> dataList = new JList<>(getDataFromDatabase());
+        frame.getContentPane().add(new JScrollPane(dataList));
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    private static String[] getDataFromDatabase() {
+        try (Connection connection = DriverManager.getConnection(DB_URL, username, Passwort);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM tablename")) {
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            String[] data = new String[columnCount];
+
+            while (resultSet.next()) {
+                StringBuilder rowData = new StringBuilder();
+                for (int i = 1; i <= columnCount; i++) {
+                    rowData.append(resultSet.getString(i)).append(" ");
+                }
+                data[resultSet.getRow() - 1] = rowData.toString();
+            }
+
+            return data;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new String[0];
+        }
+    }
+}
+
+*/
     }
 
 
