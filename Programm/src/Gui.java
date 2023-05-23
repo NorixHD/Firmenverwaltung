@@ -22,7 +22,7 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-    public class Gui extends JFrame {
+    public class MitarbeiterverwaltungsGui extends JFrame {
 
         private JButton btnAbschlussID;
         private JButton btnAllleLoeschen;
