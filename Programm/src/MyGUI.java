@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MyGUI extends JFrame implements ActionListener {
+public class AuswahlGUI extends JFrame implements ActionListener {
     private JButton button1, button2, button3, button4;
 
-    public MyGUI() {
-        setTitle("Meine GUI");
+    public AuswahlGUI() {
+        setTitle("AuswahlGUI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel(new GridLayout(2, 2));
