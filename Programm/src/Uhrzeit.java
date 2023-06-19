@@ -1,22 +1,15 @@
+package de.lelonek.unternehmensverwaltung;
 
-
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class Uhrzeit implements Runnable {
 
-    Date now;
-
     private JTextField tfAktuelleZeit;
     private JTextField tfStartZeit;
-    int hours;
-    int minutes;
-    int seconds;
-
-    int hours2; // Des ist nur für die Zwei unteren Textfelder
-    int minutes2;
-    int seconds2;
 
     public Uhrzeit(JTextField tfAktuelleZeit, JTextField tfStartZeit) {
         this.tfAktuelleZeit = tfAktuelleZeit;
@@ -25,18 +18,17 @@ public class Uhrzeit implements Runnable {
 
     public void run() {
         while (true) {
-            now = new Date();
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-            hours = now.getHours();
-            minutes = now.getMinutes();
-            seconds = now.getSeconds();
+            String formattedTime = now.format(formatter);
 
-            // tfZeit.setText(String.format("%02d:%02d:%02d\n",Integer.toString(hours),
-            // Integer.toString(minutes), Integer.toString(seconds)));
-            tfAktuelleZeit.setText(String.format("%02d:%02d:%02d\n", hours, minutes, seconds));
+            SwingUtilities.invokeLater(() -> {
+                tfAktuelleZeit.setText(formattedTime);
+            });
 
             try {
-                Thread.sleep(1000); // Die Uhr aktualisiert sich jede Sekunde
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -44,16 +36,14 @@ public class Uhrzeit implements Runnable {
     }
 
     public void zeitEintragen(JTextField feld) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-        hours2 = now.getHours();
-        minutes2 = now.getMinutes();
-        seconds2 = now.getSeconds();
-        feld.setText(String.format("%02d:%02d:%02d\n", hours2, minutes2, seconds2));
-        // semaphor1=false;
+        String formattedTime = now.format(formatter);
 
+        SwingUtilities.invokeLater(() -> {
+            feld.setText(formattedTime);
+        });
     }
 
 }
-
-//tfZeit.setText("%02d:%02d:%02d\n",Integer.toString(hours), Integer.toString(minutes), Integer.toString(seconds));
-//System.out.printf("%02d:%02d:%02d\n", hours, minutes, seconds);

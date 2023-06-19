@@ -1,3 +1,4 @@
+package de.lelonek.unternehmensverwaltung;
 
 
 import java.awt.BorderLayout;
@@ -10,12 +11,15 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 
 public class StempelView extends JFrame {
@@ -24,7 +28,7 @@ public class StempelView extends JFrame {
 
     private JButton btnDatum;
     private JButton btnPause;
-    private JButton btnSchlieen;
+    private JButton btnSchlieﬂen;
     private JButton btnStop;
     private JButton btnWeiter;
 
@@ -32,6 +36,8 @@ public class StempelView extends JFrame {
     private JLabel lblStartZeit;
     private JLabel lblStop;
     private JLabel lblAktuelleZeit;
+    private JLabel lblLaueft;
+    private JLabel lblPausen ;
 
     private JTextField tfDatum;
     private JTextField tfStop;
@@ -45,11 +51,13 @@ public class StempelView extends JFrame {
     private LocalDateTime end;
     private LocalDateTime start;
     private Uhrzeit uhrzeit;
-	public  String Datum;
     
     
     public long hours, minutes, seconds;
     public double gearbeiteteZeit;
+    private ArrayList<LocalDateTime> pausen = new ArrayList<LocalDateTime>();
+    private ArrayList<LocalDateTime> weiter =new ArrayList<LocalDateTime>();
+    private JTextField tfAnzahlPausen;
     
    
     
@@ -67,9 +75,11 @@ public class StempelView extends JFrame {
 		}
 	    }
 	});
-    }
+}
 
-    /**
+    
+
+    /* 
      * Create the frame.
      */
     public StempelView() {
@@ -82,43 +92,73 @@ public class StempelView extends JFrame {
 	contentPane.setLayout(null);
 
 	btnPause = new JButton("Pause");
+	btnPause.setForeground(new Color(0, 0, 128));
+	btnPause.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    btnStop.setVisible(false);
+		    btnPause.setVisible(false);
+		    btnWeiter.setVisible(true);
+		    pausen.add(LocalDateTime.now());
+		    //System.out.println("Pausen" +pausen.get(0));
+		    tfAnzahlPausen.setText(Integer.toString(pausen.size()));
+		   // lblLaueft.setVisible(false);
+		    lblLaueft.setText("Ihre Zeit wird pausiert");
+		    
+		}
+	});
 	btnPause.setBounds(152, 310, 89, 23);
 	contentPane.add(btnPause);
+	btnPause.setVisible(false);
 
 	btnStop = new JButton("Stop");
+	btnStop.setForeground(new Color(0, 0, 128));
 	btnStop.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		lblStop.setVisible(true);
 		tfStop.setVisible(true);
 		
-		 end = LocalDateTime.now();
-		 Duration d = Duration.between(start, end); 
-		hours = d.toHours(); 
-		 minutes = d.toMinutes() % 60; 
-		seconds = d.getSeconds() % 60; 
-		gearbeiteteZeit=hours/3600 +minutes/60+seconds;		//Umwandlung der Zeit in Sekunden
 		
-		 String result = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-
-			//Stefan
-
-			Database.einfuegen_Zeit(2, Datum,gearbeiteteZeit);
-
-			//Stefan Ende
-
-
-
-			uhrzeit.zeitEintragen(tfEndeZeit);
+		 end = LocalDateTime.now();
+		Duration d = Duration.between(start, end); 
+		gearbeiteteZeit=d.toSeconds();
+		System.out.println(gearbeiteteZeit);
+		for(int i=0; i<pausen.size(); i++) {
+		   // LocalDateTime differenz= weiter.get(i)-pausen.get(i);
+		    Duration d1= Duration.between(pausen.get(i),weiter.get(i));
+		    long diffSek=d1.toSeconds();
+		    gearbeiteteZeit = gearbeiteteZeit-diffSek;
+		    //System.out.println("Gearbeitet: " +gearbeiteteZeit);
+		    
+		}
+		hours = (int) (gearbeiteteZeit / 3600);
+		int restsekunden = (int) (gearbeiteteZeit % 3600);
+		minutes= restsekunden / 60;
+		seconds = restsekunden % 60;
+		
+		/*
+		hours = d.toHours(); 
+		minutes = d.toMinutes() % 60; 
+		seconds = d.getSeconds() % 60; 
+		*/
+		
+		 String result = String.format("%02d:%02d:%02d", hours, minutes, seconds); 
+		 System.out.println("Result: " + result);
+		 
+		 uhrzeit.zeitEintragen(tfEndeZeit);
 		 tfStop.setText(result);
 		 
 		 btnStop.setVisible(false);
 		 btnPause.setVisible(false);
 		 btnWeiter.setVisible(false);
 		 
+		// System.out.println(gearbeiteteZeit);
+		 lblLaueft.setText("Ihre Arbeitszeit ist beendet");
+		 
 	    }
 	});
 	btnStop.setBounds(32, 310, 89, 23);
 	contentPane.add(btnStop);
+	btnStop.setVisible(false);
 
 	tfZeit = new JTextField();
 	tfZeit.setEditable(false);
@@ -131,13 +171,13 @@ public class StempelView extends JFrame {
 	contentPane.add(lblAktuelleZeit);
 
 	btnDatum = new JButton("Aktuelles Datum eintragen lassen");
+	btnDatum.setForeground(new Color(0, 0, 128));
 	btnDatum.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		Date datum = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		tfDatum.setText(format.format(datum));
 		tfDatum.setVisible(true);
-			Datum = format.format(datum);
 	    }
 	});
 	btnDatum.setBounds(29, 72, 231, 23);
@@ -150,18 +190,31 @@ public class StempelView extends JFrame {
 	tfDatum.setColumns(10);
 	tfDatum.setVisible(false);
 
-	btnSchlieen = new JButton("Schlie\u00DFen");
-	btnSchlieen.addActionListener(new ActionListener() {
+	btnSchlieﬂen = new JButton("Schlie\u00DFen");
+	btnSchlieﬂen.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		System.exit(0);
 	    }
 	});
-	btnSchlieen.setBounds(749, 475, 121, 23);
-	contentPane.add(btnSchlieen);
+	btnSchlieﬂen.setBounds(749, 475, 121, 23);
+	contentPane.add(btnSchlieﬂen);
 
 	btnWeiter = new JButton("Weiter");
+	btnWeiter.setForeground(new Color(0, 0, 128));
+	btnWeiter.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    btnStop.setVisible(true);
+		    btnPause.setVisible(true);
+		    btnWeiter.setVisible(false);
+		    weiter.add(LocalDateTime.now());
+		    lblLaueft.setVisible(true);
+		    
+		 //   System.out.println(("Weiter" +weiter.get(0)));
+		}
+	});
 	btnWeiter.setBounds(280, 310, 89, 23);
 	contentPane.add(btnWeiter);
+	btnWeiter.setVisible(false);
 
 	lblStop = new JLabel("Gearbeitete Zeit:");
 	lblStop.setBounds(32, 256, 138, 14);
@@ -175,14 +228,21 @@ public class StempelView extends JFrame {
 	tfStop.setColumns(10);
 
 	btnStart = new JButton("Der Start Ihrer Arbeitszeit");
+	btnStart.setForeground(new Color(0, 0, 128));
 	btnStart.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		 start = LocalDateTime.now();
 		 uhrzeit.zeitEintragen(tfStartZeit);
 		 btnStart.setVisible(false);
+		 btnStop.setVisible(true);
+		 btnPause.setVisible(true);
+		 btnWeiter.setVisible(false);
+		 lblPausen.setVisible(true);
+		 tfAnzahlPausen.setVisible(true);
+		 lblLaueft.setVisible(true);
 	    }
 	});
-	btnStart.setBounds(170, 201, 212, 23);
+	btnStart.setBounds(37, 201, 604, 23);
 	contentPane.add(btnStart);
 
 	lblDatum = new JLabel("Datum:");
@@ -211,13 +271,30 @@ public class StempelView extends JFrame {
 	tfStop.setVisible(false);
 
 	uhrzeit = new Uhrzeit(tfZeit, tfStartZeit);
+	
+	lblLaueft = new JLabel("Ihre Zeit laueft!!");
+	lblLaueft.setBounds(673, 205, 166, 14);
+	lblLaueft.setVisible(false);
+	contentPane.add(lblLaueft);
+	lblLaueft.setVisible(false);
+	
+	lblPausen = new JLabel("Anzahl der Pausen:");
+	lblPausen.setBounds(421, 256, 111, 14);
+	contentPane.add(lblPausen);
+	lblPausen.setVisible(false);
+	
+	tfAnzahlPausen = new JTextField();
+	tfAnzahlPausen.setEnabled(false);
+	tfAnzahlPausen.setBounds(542, 253, 86, 20);
+	contentPane.add(tfAnzahlPausen);
+	tfAnzahlPausen.setColumns(10);
+	tfAnzahlPausen.setVisible(false);
+	
 	Thread t = new Thread(uhrzeit);
 	t.start();
 	
 	
 
-    }
-    public double getGearbeiteZeitInSekunden() {
-	    return gearbeiteteZeit;
+
 	}
 }
