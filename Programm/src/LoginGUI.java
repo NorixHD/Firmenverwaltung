@@ -33,6 +33,8 @@ public class LoginGUI extends JFrame {
 
         setSize(400, 200);
 
+    setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         setLayout(new BorderLayout());
 
 
