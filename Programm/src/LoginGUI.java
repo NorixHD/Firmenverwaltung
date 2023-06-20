@@ -58,7 +58,7 @@ public class LoginGUI extends JFrame {
 
                 String password = new String(passwordField.getPassword());
 
-                Database.Abgleich(input,password);
+               // Database.Abgleich(input,password);
                 System.out.println(input+password);
                 if (Var.Eingeloggt) {
 
@@ -74,7 +74,7 @@ public class LoginGUI extends JFrame {
 
 
 // erster login
-               /* if (userCredentials.containsKey(input) && userCredentials.get(input).equals(password)) {
+               if (userCredentials.containsKey(input) && userCredentials.get(input).equals(password)) {
 
                     JOptionPane.showMessageDialog(null, "Erfolgreich eingeloggt!");
                     MyGUI.main();
@@ -84,7 +84,7 @@ public class LoginGUI extends JFrame {
 
                     JOptionPane.showMessageDialog(null, "Falscher Benutzername/ID oder Passwort!");
 
-                }*/
+                }
 
             }
 
