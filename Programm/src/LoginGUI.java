@@ -113,16 +113,19 @@ public class LoginGUI extends JFrame {
         add(loginPanel, BorderLayout.CENTER);
 
 
-        // Benutzer-Credentials initialisieren
+        // Benutzer-Credentials initialisieren diese Hashmap muss mit ID und Passwort befüllt werden
 
         userCredentials = new HashMap<>();
 
+        
+/*
+// Input für die User nur Beispielhaft
         userCredentials.put("user1", "password1");
 
         userCredentials.put("user2", "password2");
 
         userCredentials.put("user3", "password3");
-
+*/
 
         // Fenster schließen
 
