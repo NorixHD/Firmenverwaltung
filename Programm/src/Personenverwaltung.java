@@ -1,4 +1,4 @@
-package de.lelonek.unternehmensverwaltung;
+//package de.lelonek.unternehmensverwaltung;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -108,7 +108,7 @@ public class Personenverwaltung extends JFrame {
      * Create the frame.
      */
     public Personenverwaltung() {
-	setTitle("Unternehmensverwaltung");
+	setTitle("Personenverwaltung");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 1010, 597);
 	//setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -201,7 +201,7 @@ public class Personenverwaltung extends JFrame {
 	    @Override
 	    public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-		    übernehmen();
+		    Ã¼bernehmen();
 		}
 	    }
 	});
@@ -213,7 +213,7 @@ public class Personenverwaltung extends JFrame {
 	btnUebernehmen.setForeground(new Color(65, 105, 225));
 	btnUebernehmen.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		übernehmen();
+		Ã¼bernehmen();
 	    }
 	});
 	btnUebernehmen.setBounds(619, 73, 214, 23);
@@ -322,7 +322,7 @@ public class Personenverwaltung extends JFrame {
 	    public void actionPerformed(ActionEvent e) {
 		// System.out.println("Hallo");
 		try {
-		    if (tfIDFinden.getText().isEmpty()) throw new Exception("Geben Sie Werte für das/die Textfelde/r ein");
+		    if (tfIDFinden.getText().isEmpty()) throw new Exception("Geben Sie Werte fÃ¼r das/die Textfelde/r ein");
 		    String suchID = tfIDFinden.getText();
 
 		    /*
@@ -332,7 +332,7 @@ public class Personenverwaltung extends JFrame {
 			String tfID_String = einzelwert[0];
 			System.out.println(einzelwert[0]);
 			*/
-		    System.out.println( "Länge"+mitarbeiterModel.size());
+		    System.out.println( "LÃ¤nge"+mitarbeiterModel.size());
 		    for (int i = 0; i < mitarbeiterModel.size(); i++) {
 			String zeile = (String) mitarbeiterModel.get(i);
 			System.out.println(zeile);
@@ -377,7 +377,7 @@ public class Personenverwaltung extends JFrame {
 	    public void actionPerformed(ActionEvent e) {
 		try {
 		    if (tfIDFinden.getText().isEmpty())
-			throw new Exception("Geben Sie eine ID für das Textfeld ein");
+			throw new Exception("Geben Sie eine ID fÃ¼r das Textfeld ein");
 		    String id = tfIDFinden.getText();
 
 		    for (int i = 0; i < mitarbeiterModel.size(); i++) {
@@ -433,11 +433,11 @@ public class Personenverwaltung extends JFrame {
 		if (mitarbeiterModel.size() != 0)
 		    mitarbeiterModel.clear();
 		if (file.exists()) {
-	                // Datei löschen
+	                // Datei lÃ¶schen
 	                if (file.delete()) {
-	                    JOptionPane.showMessageDialog(null, "Datei wurde erfolgreich gelöscht");
+	                    JOptionPane.showMessageDialog(null, "Datei wurde erfolgreich gelÃ¶scht");
 	                } else {
-	                    JOptionPane.showMessageDialog(null,"Fehler beim Löschen der Datei", "Falsche Eingabe",JOptionPane.ERROR_MESSAGE);
+	                    JOptionPane.showMessageDialog(null,"Fehler beim LÃ¶schen der Datei", "Falsche Eingabe",JOptionPane.ERROR_MESSAGE);
 	                }
 	            
 	            }
@@ -494,7 +494,7 @@ public class Personenverwaltung extends JFrame {
 	
 	 file = new File(filename);
         if (file.exists()) {
-            // Wenn die Datei existiert, Werte zur Liste hinzufügen und anzeigen
+            // Wenn die Datei existiert, Werte zur Liste hinzufÃ¼gen und anzeigen
             try {
                  fileReader = new FileReader(file);
                  bufferedReader = new BufferedReader(fileReader);
@@ -510,60 +510,60 @@ public class Personenverwaltung extends JFrame {
     }
     
 
-    private void übernehmen() {
-	try {
-	    if (tfNachname.getText().isEmpty()
-		    || tfVorname.getText().isEmpty()
-		    || tfEmail.getText().isEmpty()
-		    || tfID.getText().isEmpty()
-		    || tfTelefon.getText().isEmpty()) throw new Exception("Geben Sie Werte für das/die Textfelde/r ein");
-	    
-	    char[] passwordChars = pfPasswort.getPassword();
-	    if (passwordChars.length == 0)throw new Exception("Geben Sie Werte für das Passwort ein");
-	     
-	    
-	    passwort = new String(passwordChars);
-	    nachname = tfNachname.getText();
-	    vorname = tfVorname.getText();
-	    telefon = tfTelefon.getText();
-	    email = tfEmail.getText();
-	    id = tfID.getText();
-	    
-	    
-	    //alleIds.add(id);
+    private void Ã¼bernehmen() {
+	    try {
+	        idExistiert = false; 
 
-	    for (int i = 0; i < mitarbeiterModel.size(); i++) {
-		String zeile = (String) mitarbeiterModel.get(i);
-		String[] einzelwert = zeile.split(";");
-		String tfID = einzelwert[0];
-		if (id.equals(tfID)) {
-		    JOptionPane.showMessageDialog(null, "Die ID existiert bereits", "Falsche Eingabe",
-			    JOptionPane.ERROR_MESSAGE);
-		    idExistiert = true;
-		    this.tfID.requestFocus();
-		   // übernehmen();
-		    break;
-		}
+	        if (tfNachname.getText().isEmpty()
+	                || tfVorname.getText().isEmpty()
+	                || tfEmail.getText().isEmpty()
+	                || tfID.getText().isEmpty()
+	                || tfTelefon.getText().isEmpty()) throw new Exception("Geben Sie Werte fÃ¼r das/die Textfelde/r ein");
+
+	        char[] passwordChars = pfPasswort.getPassword();
+	        if (passwordChars.length == 0) throw new Exception("Geben Sie Werte fÃ¼r das Passwort ein");
+
+
+	        passwort = new String(passwordChars);
+	        nachname = tfNachname.getText();
+	        vorname = tfVorname.getText();
+	        telefon = tfTelefon.getText();
+	        email = tfEmail.getText();
+	        id = tfID.getText();
+
+
+	        for (int i = 0; i < mitarbeiterModel.size(); i++) {
+	            String zeile = (String) mitarbeiterModel.get(i);
+	            String[] einzelwert = zeile.split(";");
+	            String tfID = einzelwert[0];
+	            if (id.equals(tfID)) {
+	                JOptionPane.showMessageDialog(null, "Die ID existiert bereits", "Falsche Eingabe",
+	                        JOptionPane.ERROR_MESSAGE);
+	                idExistiert = true;
+	                this.tfID.requestFocus();
+	                break;
+	            }
+	        }
+	        if (idExistiert == false) {
+
+	            mitarbeiterModel.addElement(id + ";" + nachname + ";" + vorname + ";" + telefon + ";" +passwort +";"+ email);
+	            saveData();
+	            tfNachname.setText("");
+	            tfVorname.setText("");
+	            tfTelefon.setText("");
+	            tfEmail.setText("");
+	            tfID.setText("");
+	            pfPasswort.setText("");
+	            lblAnzahl.setText("Anzahl: " + mitarbeiterModel.size());
+	            tfID.requestFocus();
+
+	        }
+
+	    } catch (Exception ex) {
+	        JOptionPane.showMessageDialog(null, ex.getMessage(), "Falsche Eingabe", JOptionPane.ERROR_MESSAGE);
 	    }
-	    if (idExistiert == false) {
-		
-		mitarbeiterModel.addElement(id + ";" + nachname + ";" + vorname + ";" + telefon + ";" +passwort +";"+ email);
-		saveData();
-		tfNachname.setText("");
-		tfVorname.setText("");
-		tfTelefon.setText("");
-		tfEmail.setText("");
-		tfID.setText("");
-		pfPasswort.setText("");
-		lblAnzahl.setText("Anzahl: " + mitarbeiterModel.size());
-		tfID.requestFocus();
-
-	    }
-
-	} catch (Exception ex) {
-	    JOptionPane.showMessageDialog(null, ex.getMessage(), "Falsche Eingabe", JOptionPane.ERROR_MESSAGE);
 	}
-    }
+
 
     private String getID(int i) {
 	String zeile = (String) mitarbeiterModel.get(i);
@@ -613,7 +613,7 @@ public class Personenverwaltung extends JFrame {
     
     private void aktualisieren() {
 	if (file.exists()) {
-            // Datei löschen
+            // Datei lÃ¶schen
             if (file.delete()) {
                 saveData();
             }
