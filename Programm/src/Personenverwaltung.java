@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.*;
 
 import java.awt.EventQueue;
 
@@ -332,13 +333,13 @@ public class Personenverwaltung extends JFrame {
 			String tfID_String = einzelwert[0];
 			System.out.println(einzelwert[0]);
 			*/
-		    System.out.println( "Länge"+mitarbeiterModel.size());
+		    //System.out.println( "Länge"+mitarbeiterModel.size());
 		    for (int i = 0; i < mitarbeiterModel.size(); i++) {
 			String zeile = (String) mitarbeiterModel.get(i);
-			System.out.println(zeile);
+			//System.out.println(zeile);
 			String[] einzelwert = zeile.split(";");
 			String tfID_String = einzelwert[0];
-			System.out.println("id"+einzelwert[0]);
+			//System.out.println("id"+einzelwert[0]);
 			if (suchID.equals(tfID_String)) {
 			    mitarbeiterModel.remove(i);
 			    lblAnzahl.setText("Anzahl: " + mitarbeiterModel.size());
@@ -353,6 +354,7 @@ public class Personenverwaltung extends JFrame {
 			    tfIDFinden.setText("");
 			    break;
 			}
+			if(mitarbeiterModel.size()-1==i) throw new Exception("Die gesuchte ID existiert nicht");
 		    }
 
 		} catch (Exception ex) {
@@ -565,6 +567,8 @@ public class Personenverwaltung extends JFrame {
 	}
 
 
+    
+    
     private String getID(int i) {
 	String zeile = (String) mitarbeiterModel.get(i);
 	String[] einzelwert = zeile.split(";");
