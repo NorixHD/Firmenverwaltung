@@ -437,7 +437,7 @@ public class Personenverwaltung extends JFrame {
 		if (file.exists()) {
 	                // Datei löschen
 	                if (file.delete()) {
-	                    JOptionPane.showMessageDialog(null, "Datei wurde erfolgreich gelöscht");
+	                    JOptionPane.showMessageDialog(null, "Alle Mitarbeiter wurden erfolgreich gelöscht");
 	                } else {
 	                    JOptionPane.showMessageDialog(null,"Fehler beim Löschen der Datei", "Falsche Eingabe",JOptionPane.ERROR_MESSAGE);
 	                }
