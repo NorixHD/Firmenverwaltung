@@ -1,4 +1,4 @@
-package de.lelonek.unternehmensverwaltung;
+//package de.lelonek.unternehmensverwaltung;
 
 
 import java.awt.BorderLayout;
@@ -22,13 +22,13 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 
 
-public class StempelView extends JFrame {
+public class Stempel extends JFrame {
 
     private JPanel contentPane;
 
     private JButton btnDatum;
     private JButton btnPause;
-    private JButton btnSchlieﬂen;
+    private JButton btnSchlie√üen;
     private JButton btnStop;
     private JButton btnWeiter;
 
@@ -68,7 +68,7 @@ public class StempelView extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    StempelView frame = new StempelView();
+		    Stempel frame = new Stempel();
 		    frame.setVisible(true);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -82,7 +82,7 @@ public class StempelView extends JFrame {
     /* 
      * Create the frame.
      */
-    public StempelView() {
+    public Stempel() {
 	setTitle("Stempel Karte f\u00FCr die Mitarbeiter");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 907, 548);
@@ -121,7 +121,7 @@ public class StempelView extends JFrame {
 		 end = LocalDateTime.now();
 		Duration d = Duration.between(start, end); 
 		gearbeiteteZeit=d.toSeconds();
-		System.out.println(gearbeiteteZeit);
+		//System.out.println(gearbeiteteZeit);
 		for(int i=0; i<pausen.size(); i++) {
 		   // LocalDateTime differenz= weiter.get(i)-pausen.get(i);
 		    Duration d1= Duration.between(pausen.get(i),weiter.get(i));
@@ -142,7 +142,7 @@ public class StempelView extends JFrame {
 		*/
 		
 		 String result = String.format("%02d:%02d:%02d", hours, minutes, seconds); 
-		 System.out.println("Result: " + result);
+		 //System.out.println("Result: " + result);
 		 
 		 uhrzeit.zeitEintragen(tfEndeZeit);
 		 tfStop.setText(result);
@@ -190,14 +190,14 @@ public class StempelView extends JFrame {
 	tfDatum.setColumns(10);
 	tfDatum.setVisible(false);
 
-	btnSchlieﬂen = new JButton("Schlie\u00DFen");
-	btnSchlieﬂen.addActionListener(new ActionListener() {
+	btnSchlie√üen = new JButton("Schlie\u00DFen");
+	btnSchlie√üen.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		System.exit(0);
 	    }
 	});
-	btnSchlieﬂen.setBounds(749, 475, 121, 23);
-	contentPane.add(btnSchlieﬂen);
+	btnSchlie√üen.setBounds(749, 475, 121, 23);
+	contentPane.add(btnSchlie√üen);
 
 	btnWeiter = new JButton("Weiter");
 	btnWeiter.setForeground(new Color(0, 0, 128));
