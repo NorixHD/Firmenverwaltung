@@ -45,7 +45,7 @@ public class TextdateiAnzeiger {
 
     private void ladenDatei() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("C:/Users/micha/eclipse-workspace/FirmenverwaltungTest"));
+        fileChooser.setCurrentDirectory(new File("C:\\Users\\Stefan\\OneDrive - Johannes-Heidenhain-Gymnasium Traunreut\\Dokumente\\11. Klasse\\Info\\Projekt\\Programm\\Auftrag0.txt"));
         fileChooser.setFileFilter(new FileNameExtensionFilter("Textdateien", "txt"));
         int result = fileChooser.showOpenDialog(frame);
         if (result == JFileChooser.APPROVE_OPTION) {

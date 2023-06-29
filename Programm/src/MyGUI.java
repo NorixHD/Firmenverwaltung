@@ -115,8 +115,9 @@ class AuswahlGUI extends JFrame implements ActionListener {
     }
 
     public void method4() {
-        if(Var.Admin=true){
+        if(Var.Admin){
             Personenverwaltung.main();
+            System.out.println(Var.Admin);
         }
         else {
             JOptionPane.showMessageDialog(null, "Keine Rechte für dieses Panel");

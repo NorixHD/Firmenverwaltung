@@ -91,6 +91,8 @@ public class LoginGUI extends JFrame {
 
                     JOptionPane.showMessageDialog(null, "Erfolgreich eingeloggt!");
                    int IDD = Integer.parseInt(input);
+                   Var.ID= IDD;
+
                    if (IDD == 1 || IDD == 2 || IDD == 3) { Var.Admin= true;}
 
                     AuswahlGUI.main();

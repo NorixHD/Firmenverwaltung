@@ -5,7 +5,7 @@ public class Var {
 
 
         static String Teilename;
-        static int Anzahl;
+        static int Anzahl,ID;
         static Boolean vorhanden;
         static Boolean Eingeloggt= false;
         static double Teilenummer;
