@@ -9,7 +9,7 @@ public class Var {
         static Boolean vorhanden;
         static Boolean Eingeloggt= false;
         static double Teilenummer;
-
+        static String filePath1 = "jlist_Mitarbeiter.txt";
         // GUI
         static JFrame jf1;
         static JButton btnENTER;
@@ -17,6 +17,9 @@ public class Var {
 
         // Label
         static Label lbl1 ;
+        // Admin
+        static boolean Admin = false;
+
 
     }
 

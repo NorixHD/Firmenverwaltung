@@ -1,4 +1,4 @@
-package de.pannier.firmenverwaltung;
+
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -11,14 +11,16 @@ public class TextdateiAnzeiger {
     private JFrame frame;
     private JTextArea textArea;
 
-    public static void main(String[] args) {
+    public static void main() {
         TextdateiAnzeiger anzeiger = new TextdateiAnzeiger();
         anzeiger.start();
     }
 
-    public void start() {
+    public  void start() {
+
+
         frame = new JFrame("Textdatei Anzeiger");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());

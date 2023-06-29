@@ -24,7 +24,7 @@ import java.awt.SystemColor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-    public class MitarbeiterverwaltungsGui extends JFrame {
+    class MitarbeiterverwaltungsGui extends JFrame {
 
         private JButton btnAbschlussID;
         private JButton btnAllleLoeschen;
@@ -57,8 +57,8 @@ import java.awt.event.KeyEvent;
 
         private int index;
 
-        private DefaultListModel<String> mitarbeiterModel;
-        private JList<String> listMitarbeiter;
+        public DefaultListModel<String> mitarbeiterModel;
+        public JList<String> listMitarbeiter;
 
         private String vorname, nachname, telefon, email, id;
 
@@ -70,7 +70,7 @@ import java.awt.event.KeyEvent;
             EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     try {
-                        Gui frame = new Gui();
+                        MitarbeiterverwaltungsGui frame = new MitarbeiterverwaltungsGui();
                         frame.setVisible(true);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -422,7 +422,7 @@ import java.awt.event.KeyEvent;
                 id = tfID.getText();
 
 int Identnr = Integer.parseInt(id);
-                Database.einfuegen_Benutzer(Identnr,nachname,vorname,telefon,email,"1");
+                //Database.einfuegen_Benutzer(Identnr,nachname,vorname,telefon,email,"1");
 
                 for (int i = 0; i < mitarbeiterModel.size(); i++) {
                     String zeile = (String) mitarbeiterModel.get(i);
@@ -453,6 +453,8 @@ int Identnr = Integer.parseInt(id);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Falsche Eingabe", JOptionPane.ERROR_MESSAGE);
             }
+
+
         }
 
         private String getID(int i) {

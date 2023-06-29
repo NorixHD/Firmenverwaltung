@@ -1,18 +1,40 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
-public class AuswahlGUI extends JFrame implements ActionListener {
+class AuswahlGUI extends JFrame implements ActionListener {
     private JButton button1, button2, button3, button4;
 
     public AuswahlGUI() {
         setTitle("AuswahlGUI");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                // Hier wird die Methode aufgerufen, wenn das JFrame geschlossen wird
+
+
+                try {
+                    Main.main(new String[0]);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
+
+
+
+
+
+
+
 
         JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.setBackground(Color.LIGHT_GRAY);
 
-        button1 = new JButton("Button 1");
+        button1 = new JButton("Stempeln");
         button1.addActionListener(this);
         button1.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
@@ -24,7 +46,7 @@ public class AuswahlGUI extends JFrame implements ActionListener {
         });
         panel.add(button1);
 
-        button2 = new JButton("Button 2");
+        button2 = new JButton("Aufträge erstellen");
         button2.addActionListener(this);
         button2.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
@@ -36,7 +58,7 @@ public class AuswahlGUI extends JFrame implements ActionListener {
         });
         panel.add(button2);
 
-        button3 = new JButton("Button 3");
+        button3 = new JButton("Aufträge Anzeigen    ");
         button3.addActionListener(this);
         button3.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
@@ -48,7 +70,7 @@ public class AuswahlGUI extends JFrame implements ActionListener {
         });
         panel.add(button3);
 
-        button4 = new JButton("Button 4");
+        button4 = new JButton("Mitarbeiterverwaltung");
         button4.addActionListener(this);
         button4.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
@@ -81,22 +103,28 @@ public class AuswahlGUI extends JFrame implements ActionListener {
     }
 
     public void method1() {
-        StempelView.main();
+        Stempel.main();
     }
 
     public void method2() {
-        // Platzhalter-Methodenaufruf für Button 2
+       AuftragsverwaltungGUI.main();
     }
 
     public void method3() {
-        // Platzhalter-Methodenaufruf für Button 3
+        TextdateiAnzeiger.main();
     }
 
     public void method4() {
-       Gui.main();
+        if(Var.Admin=true){
+            Personenverwaltung.main();
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Keine Rechte für dieses Panel");
+        }
+
     }
 
     public static void main() {
-        MyGUI gui = new MyGUI();
+        AuswahlGUI gui = new AuswahlGUI();
     }
 }

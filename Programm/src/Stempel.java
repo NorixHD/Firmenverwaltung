@@ -4,12 +4,16 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +54,7 @@ public class Stempel extends JFrame {
 
     private LocalDateTime end;
     private LocalDateTime start;
-    private Uhrzeit uhrzeit;
+    private de.lelonek.unternehmensverwaltung.Uhrzeit uhrzeit;
     
     
     public long hours, minutes, seconds;
@@ -64,7 +68,7 @@ public class Stempel extends JFrame {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
+    public static void main() {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
@@ -84,7 +88,7 @@ public class Stempel extends JFrame {
      */
     public Stempel() {
 	setTitle("Stempel Karte f\u00FCr die Mitarbeiter");
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	setBounds(100, 100, 907, 548);
 	contentPane = new JPanel();
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -270,7 +274,7 @@ public class Stempel extends JFrame {
 	tfEndeZeit.setColumns(10);
 	tfStop.setVisible(false);
 
-	uhrzeit = new Uhrzeit(tfZeit, tfStartZeit);
+	uhrzeit = new de.lelonek.unternehmensverwaltung.Uhrzeit(tfZeit, tfStartZeit);
 	
 	lblLaueft = new JLabel("Ihre Zeit laueft!!");
 	lblLaueft.setBounds(673, 205, 166, 14);

@@ -6,6 +6,12 @@ import javax.swing.*;
 
 import java.awt.*;
 
+import java.io.*;
+import java.util.*;
+
+
+import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -15,7 +21,7 @@ import java.util.HashMap;
 
 public class LoginGUI extends JFrame {
 
-    private HashMap<String, String> userCredentials; // HashMap zur Speicherung von Benutzername und Passwort
+    public static HashMap<String, String> userCredentials; // HashMap zur Speicherung von Benutzername und Passwort
 
     private JTextField inputTextField;
 
@@ -23,6 +29,11 @@ public class LoginGUI extends JFrame {
 
 
     public LoginGUI() {
+
+
+
+
+
 
         // Fenstertitel setzen
 
@@ -60,12 +71,12 @@ public class LoginGUI extends JFrame {
 
                 String password = new String(passwordField.getPassword());
 
-               // Database.Abgleich(input,password);
+             /*  // Database.Abgleich(input,password);
                 System.out.println(input+password);
                 if (Var.Eingeloggt) {
 
                     JOptionPane.showMessageDialog(null, "Erfolgreich eingeloggt!");
-                    MyGUI.main();
+                    AuswahlGUI.main();
                     dispose();
 
                 } else {
@@ -73,13 +84,16 @@ public class LoginGUI extends JFrame {
                     JOptionPane.showMessageDialog(null, "Falscher Benutzername/ID oder Passwort!");
 
                 }
-
+*/
 
 // erster login
                if (userCredentials.containsKey(input) && userCredentials.get(input).equals(password)) {
 
                     JOptionPane.showMessageDialog(null, "Erfolgreich eingeloggt!");
-                    MyGUI.main();
+                   int IDD = Integer.parseInt(input);
+                   if (IDD == 1 || IDD == 2 || IDD == 3) { Var.Admin= true;}
+
+                    AuswahlGUI.main();
                     dispose();
 
                 } else {
@@ -120,14 +134,13 @@ public class LoginGUI extends JFrame {
         userCredentials = new HashMap<>();
 
         
-/*
-// Input für die User nur Beispielhaft
+
+ //Input für die User nur Beispielhaft
         userCredentials.put("user1", "password1");
 
         userCredentials.put("user2", "password2");
 
         userCredentials.put("user3", "password3");
-*/
 
         // Fenster schließen
 
@@ -143,6 +156,13 @@ public class LoginGUI extends JFrame {
 
     public static void main() {
 
+        new Var();
+        // new Gui();
+        new Personenverwaltung();
+
+        // new  Database();
+        new Stempel();
+
         // GUI starten
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -153,9 +173,19 @@ public class LoginGUI extends JFrame {
 
             }
 
-        });
 
+        });
+        new Personenverwaltung().Hashmapbeladen();
     }
+
+
+
+
+
+
+
+
+
 
 }
 

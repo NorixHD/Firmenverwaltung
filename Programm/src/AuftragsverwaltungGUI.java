@@ -1,4 +1,4 @@
-package de.pannier.firmenverwaltung;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class AuftragsverwaltungGUI {
     private JTextArea beschreibungTextArea;
     private static final String DATEINAME = "variablen.txt";
 
-    public static void main(String[] args) {
+    public static void main() {
         AuftragsverwaltungGUI auftragsverwaltung = new AuftragsverwaltungGUI();
         auftragsverwaltung.start();
         
@@ -28,7 +28,7 @@ public class AuftragsverwaltungGUI {
 
     public void start() {
         frame = new JFrame("Auftragsverwaltung");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

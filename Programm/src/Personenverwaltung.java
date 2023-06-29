@@ -92,7 +92,7 @@ public class Personenverwaltung extends JFrame {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
+    public static void main() {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
@@ -110,7 +110,7 @@ public class Personenverwaltung extends JFrame {
      */
     public Personenverwaltung() {
 	setTitle("Personenverwaltung");
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  //JFrame.EXIT_ON_CLOSE
 	setBounds(100, 100, 1010, 597);
 	//setExtendedState(JFrame.MAXIMIZED_BOTH);
 	contentPane = new JPanel();
@@ -481,8 +481,8 @@ public class Personenverwaltung extends JFrame {
 	JButton btnBildEinfuegen = new JButton("Bild einf\u00FCgen");
 	btnBildEinfuegen.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-		    ImageDragAndDrop frame = new ImageDragAndDrop();
-		    frame.setVisible(true);
+		   // ImageDragAndDrop frame = new ImageDragAndDrop();
+		   // frame.setVisible(true);
 		}
 	});
 	btnBildEinfuegen.setForeground(new Color(100, 149, 237));
@@ -623,6 +623,40 @@ public class Personenverwaltung extends JFrame {
             }
         }
     }
+
+
+
+	public void Hashmapbeladen(){
+
+		file = new File(filename);
+		if (file.exists()) {
+			// Wenn die Datei existiert, Werte zur Liste hinzufügen und anzeigen
+			try {
+				fileReader = new FileReader(file);
+				bufferedReader = new BufferedReader(fileReader);
+				String line;
+				while ((line = bufferedReader.readLine()) != null) {
+					mitarbeiterModel.addElement(line);
+				}
+				bufferedReader.close();
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null,e.getMessage(), "Fehlermeldung",JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		 for (int i=0;i<10;i++) {
+
+			String zeile = (String) mitarbeiterModel.get(i);
+			String[] einzelwert = zeile.split(";");
+			System.out.println(einzelwert[0]+"  "+einzelwert[4]);
+
+//hashmap speichern
+LoginGUI.userCredentials.put(einzelwert[0], einzelwert[4]);
+
+			tfID.requestFocus();
+		}
+
+	}
 }
 
 

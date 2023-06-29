@@ -37,7 +37,7 @@ public class ImageDragAndDrop extends JFrame {
         btnLoeschen.setForeground(new Color(100, 149, 237));
         btnLoeschen.addActionListener(e -> {
             label.setIcon(null); // remove the image icon from the label
-            label.setText("Fügen Sie hier ein Bild eines Mitarbeiters ein"); // set the label text back to the default
+            label.setText("Fï¿½gen Sie hier ein Bild eines Mitarbeiters ein"); // set the label text back to the default
         });
 
         JPanel buttonPanel = new JPanel();
@@ -89,7 +89,7 @@ public class ImageDragAndDrop extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         ImageDragAndDrop frame = new ImageDragAndDrop();
         frame.setVisible(true);
     }
