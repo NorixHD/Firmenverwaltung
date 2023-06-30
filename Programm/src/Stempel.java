@@ -5,16 +5,25 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
-
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.time.Duration;
@@ -29,6 +38,7 @@ import java.awt.Color;
 public class Stempel extends JFrame {
 
     private JPanel contentPane;
+	public String Auftragsnummer;
 
     private JButton btnDatum;
     private JButton btnPause;
@@ -42,6 +52,8 @@ public class Stempel extends JFrame {
     private JLabel lblAktuelleZeit;
     private JLabel lblLaueft;
     private JLabel lblPausen ;
+	private JLabel lblAuftragsNr ;
+	private JTextField tfAuftragsNr;
 
     private JTextField tfDatum;
     private JTextField tfStop;
@@ -62,6 +74,8 @@ public class Stempel extends JFrame {
     private ArrayList<LocalDateTime> pausen = new ArrayList<LocalDateTime>();
     private ArrayList<LocalDateTime> weiter =new ArrayList<LocalDateTime>();
     private JTextField tfAnzahlPausen;
+
+
     
    
     
@@ -69,6 +83,8 @@ public class Stempel extends JFrame {
      * Launch the application.
      */
     public static void main() {
+
+
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
@@ -81,9 +97,10 @@ public class Stempel extends JFrame {
 	});
 }
 
-    
 
-    /* 
+
+
+	/*
      * Create the frame.
      */
     public Stempel() {
@@ -94,6 +111,17 @@ public class Stempel extends JFrame {
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	setContentPane(contentPane);
 	contentPane.setLayout(null);
+
+
+
+
+
+		Map<String, Integer> hashMap = loadHashMapFromFile("hashmap.txt");
+		System.out.println("HashMap erfolgreich geladen:");
+		for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
+			System.out.println("Key: " + entry.getKey() + ", Wert: " + entry.getValue());
+		}
+
 
 	btnPause = new JButton("Pause");
 	btnPause.setForeground(new Color(0, 0, 128));
@@ -120,18 +148,26 @@ public class Stempel extends JFrame {
 	    public void actionPerformed(ActionEvent e) {
 		lblStop.setVisible(true);
 		tfStop.setVisible(true);
-		
-		
+
+
+
 		 end = LocalDateTime.now();
 		Duration d = Duration.between(start, end); 
 		gearbeiteteZeit=d.toSeconds();
-		//System.out.println(gearbeiteteZeit);
+
+			Auftragsnummer=tfAuftragsNr.getText();
+			if (Auftragsnummer== null){
+				Auftragsnummer = "0";
+			}
+			hashMap.put(Auftragsnummer, (int) gearbeiteteZeit);
+			saveHashMapToFile(hashMap);
+		System.out.println(gearbeiteteZeit + Auftragsnummer);
 		for(int i=0; i<pausen.size(); i++) {
 		   // LocalDateTime differenz= weiter.get(i)-pausen.get(i);
 		    Duration d1= Duration.between(pausen.get(i),weiter.get(i));
 		    long diffSek=d1.toSeconds();
 		    gearbeiteteZeit = gearbeiteteZeit-diffSek;
-		    //System.out.println("Gearbeitet: " +gearbeiteteZeit);
+		    System.out.println("Gearbeitet: " +gearbeiteteZeit);
 		    
 		}
 		hours = (int) (gearbeiteteZeit / 3600);
@@ -286,19 +322,76 @@ public class Stempel extends JFrame {
 	lblPausen.setBounds(421, 256, 111, 14);
 	contentPane.add(lblPausen);
 	lblPausen.setVisible(false);
-	
+
 	tfAnzahlPausen = new JTextField();
 	tfAnzahlPausen.setEnabled(false);
 	tfAnzahlPausen.setBounds(542, 253, 86, 20);
 	contentPane.add(tfAnzahlPausen);
 	tfAnzahlPausen.setColumns(10);
 	tfAnzahlPausen.setVisible(false);
-	
+
+
+	// Test Stefan
+
+		lblAuftragsNr = new JLabel("AuftragsNr");
+		lblAuftragsNr.setForeground(new Color(0, 0, 128));
+		lblAuftragsNr.setBounds(159, 11, 105, 14);
+		contentPane.add(lblAuftragsNr);
+
+		tfAuftragsNr = new JTextField();
+
+		tfAuftragsNr.setBounds(155, 27, 131, 20);
+		contentPane.add(tfAuftragsNr);
+		tfAuftragsNr.setColumns(10);
+
+
+	//Ende Test
 	Thread t = new Thread(uhrzeit);
 	t.start();
+
+
 	
 	
 
 
 	}
+
+
+
+
+	// Hashmap speichern
+
+
+	private static void saveHashMapToFile(Map<String, Integer> hashMap) {
+		try (FileWriter writer = new FileWriter("hashmap.txt")) {
+			for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
+				String line = entry.getKey() + "=" + entry.getValue();
+				writer.write(line);
+				writer.write(System.lineSeparator());
+			}
+			System.out.println("HashMap wurde erfolgreich in die Datei gespeichert.");
+		} catch (IOException e) {
+			System.out.println("Fehler beim Speichern der HashMap in die Datei: " + e.getMessage());
+		}
+	}
+
+	private static Map<String, Integer> loadHashMapFromFile(String filename) {
+		Map<String, Integer> hashMap = new HashMap<>();
+		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				String[] parts = line.split("=");
+				if (parts.length == 2) {
+					String key = parts[0];
+					int value = Integer.parseInt(parts[1]);
+					hashMap.put(key, value);
+				}
+			}
+			System.out.println("HashMap erfolgreich aus der Datei geladen.");
+		} catch (IOException e) {
+			System.out.println("Fehler beim Laden der HashMap aus der Datei: " + e.getMessage());
+		}
+		return hashMap;
+	}
+
 }

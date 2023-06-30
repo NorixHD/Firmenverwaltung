@@ -6,6 +6,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -15,7 +17,11 @@ public class AuftragsverwaltungGUI {
 
     private JFrame frame;
     private JTextField datumTextField;
-    //private JTextField auftragsnummerTextField;
+
+
+    private JTextField auftragsnummerTextField;
+
+
     private JTextField anschriftTextField;
     private JTextArea beschreibungTextArea;
     private static final String DATEINAME = "variablen.txt";
@@ -35,8 +41,15 @@ public class AuftragsverwaltungGUI {
 
         JLabel datumLabel = new JLabel("Datum: (dd.mm.yyyy)");
         datumTextField = new JTextField(20);
-        //JLabel auftragsnummerLabel = new JLabel("Auftragsnummer:");
-        //auftragsnummerTextField = new JTextField(20);
+
+
+
+        JLabel auftragsnummerLabel = new JLabel("Auftragsnummer:");
+        auftragsnummerTextField = new JTextField(20);
+        panel.add(auftragsnummerLabel);
+        panel.add(auftragsnummerTextField);
+
+
         JLabel anschriftLabel = new JLabel("Anschrift: (Straße, Hausnummer, Ort, Postleitzahl)");
         anschriftTextField = new JTextField(20);
         JLabel beschreibungLabel = new JLabel("Beschreibung:");
@@ -47,8 +60,11 @@ public class AuftragsverwaltungGUI {
 
         panel.add(datumLabel);
         panel.add(datumTextField);
-        //panel.add(auftragsnummerLabel);
-        //panel.add(auftragsnummerTextField);
+
+
+
+
+
         panel.add(anschriftLabel);
         panel.add(anschriftTextField);
         panel.add(beschreibungLabel);
@@ -64,9 +80,22 @@ public class AuftragsverwaltungGUI {
 
     private void auftragHinzufuegen() {
         String datum = datumTextField.getText();
-        //String auftragsnummer = auftragsnummerTextField.getText();
+        String auftragsnummer = auftragsnummerTextField.getText();
         String anschrift = anschriftTextField.getText();
         String beschreibung = beschreibungTextArea.getText();
+        // Stefan
+        Map<String, Integer> hashMap = loadHashMapFromFile("hashmap.txt");
+        System.out.println("HashMap erfolgreich geladen:");
+        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Wert: " + entry.getValue());
+        }
+
+       int GearbeiteteZeit= hashMap.get(auftragsnummer);
+
+beschreibung= beschreibung ;
+
+
+
 
         try {
             DATEI_NAME = "Auftrag" + auslesen() + ".txt";
@@ -81,6 +110,8 @@ public class AuftragsverwaltungGUI {
             writer.write("Beschreibung: ");
             writer.newLine();
             writer.write(beschreibung);
+            writer.newLine();
+            writer.write("Arbeitszeit an diesem Auftrag: "+GearbeiteteZeit);
             writer.newLine();
             writer.close();
 
@@ -126,4 +157,24 @@ public class AuftragsverwaltungGUI {
             auftragHinzufuegen();
         }
     }
-}
+
+    // Stefan
+
+    private static Map<String, Integer> loadHashMapFromFile(String filename) {
+        Map<String, Integer> hashMap = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("=");
+                if (parts.length == 2) {
+                    String key = parts[0];
+                    int value = Integer.parseInt(parts[1]);
+                    hashMap.put(key, value);
+                }
+            }
+            System.out.println("HashMap erfolgreich aus der Datei geladen.");
+        } catch (IOException e) {
+            System.out.println("Fehler beim Laden der HashMap aus der Datei: " + e.getMessage());
+        }
+        return hashMap;
+}}

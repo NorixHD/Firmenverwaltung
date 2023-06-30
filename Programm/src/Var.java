@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Var {
 
-
+// akke Klassenübergreifende Variablen
 
         static String Teilename;
         static int Anzahl,ID;
